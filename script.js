@@ -6,7 +6,6 @@ const inputText = document.querySelector("#item");
 const container = document.querySelector(".container");
 
 let containerSize = 960;
-let squaresPerSide = 16;
 
 function createGrid() {
     const existingGrid = document.querySelector(".gridContainer");
@@ -16,11 +15,31 @@ function createGrid() {
 
     if (inputText.value === "") {
         squaresPerSide = 20;
-    } else {
+    } else if (+inputText.value > 100) {
+        inputText.value = "";
+        return alert("Please enter a number below 100");
+    } else if (960 % +inputText.value === 0) {
         squaresPerSide = +inputText.value;
+    } else {
+        let inputNumberPlusOne = +inputText.value;
+        let inputNumberMinusOne = +inputText.value;
+        do {
+            inputNumberPlusOne++
+            inputNumberMinusOne--
+            if (960 % inputNumberPlusOne === 0) {
+                inputText.value = inputNumberPlusOne;
+                squaresPerSide = inputNumberPlusOne;
+                break;
+            } else if (960 % inputNumberMinusOne === 0) {
+                inputText.value = inputNumberMinusOne;
+                squaresPerSide = inputNumberMinusOne;
+                break;
+            } 
+        } 
+        while (true);
     }
 
-    let pixelSize = 960 / squaresPerSide;
+    let pixelSize = containerSize / squaresPerSide;
 
     const gridContainer = document.createElement("div");
     container.appendChild(gridContainer);
