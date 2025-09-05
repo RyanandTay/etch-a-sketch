@@ -1,17 +1,36 @@
 const runGridButton = document.querySelector(".gridButton");
 runGridButton.addEventListener("click", createGrid);
 
+const inputText = document.querySelector("#item");
+
 const container = document.querySelector(".container");
+
 let containerSize = 960;
 let squaresPerSide = 16;
-let pixelSize = 960 / squaresPerSide;
 
 function createGrid() {
-    container.style.cssText = "display: flex; flex-wrap: wrap; height: 960px; width: 960px; border: 2px solid red;";
+    const existingGrid = document.querySelector(".gridContainer");
+    if (existingGrid) {
+        container.removeChild(existingGrid);
+    }
+
+    if (inputText.value === "") {
+        squaresPerSide = 20;
+    } else {
+        squaresPerSide = +inputText.value;
+    }
+
+    let pixelSize = 960 / squaresPerSide;
+
+    const gridContainer = document.createElement("div");
+    container.appendChild(gridContainer);
+    gridContainer.className = "gridContainer";
+
+    gridContainer.style.cssText = "display: flex; flex-wrap: wrap; height: 960px; width: 960px; border: 2px solid red;";
     for (let i = 0; i < (Math.pow(squaresPerSide, 2)); i++) {
         let loopPixel = document.createElement("div");
         loopPixel.className = "gridClass";
-        container.appendChild(loopPixel);
+        gridContainer.appendChild(loopPixel);
     }
 
     gridArray = [...document.querySelectorAll(".gridClass")];

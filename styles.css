@@ -1,0 +1,11 @@
+.interactiveHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
