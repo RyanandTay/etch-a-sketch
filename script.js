@@ -1,11 +1,15 @@
-const runGridButton = document.querySelector(".gridButton");
-runGridButton.addEventListener("click", createGrid);
-
+let containerSize = 960;
 const inputText = document.querySelector("#item");
-
 const container = document.querySelector(".container");
 
-let containerSize = 960;
+inputText.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+        createGrid();
+    }
+});
+
+const runGridButton = document.querySelector(".gridButton");
+runGridButton.addEventListener("click", createGrid);
 
 function createGrid() {
     const existingGrid = document.querySelector(".gridContainer");
@@ -54,7 +58,22 @@ function createGrid() {
 
     gridArray = [...document.querySelectorAll(".gridClass")];
     gridArray.forEach(pixel => {
-        pixel.style.cssText = "width: " + pixelSize + "px; height: " + pixelSize + "px; margin: 0px; border: 2px solid black; box-sizing: border-box";
-    });       
+        pixel.style.cssText = "width: " + pixelSize + "px; height: " + pixelSize + "px; margin: 0px; box-sizing: border-box";
+    });
+    
+    colorizeOnHover();
 }
 
+function colorizeOnHover() {
+    const colors = ['red', 'green', 'blue', 'yellow', 'orange'];
+    let currentColorIndex = 0;
+
+    const gridContainer = document.querySelector(".gridContainer");
+
+    gridContainer.addEventListener("mousemove", (e) => {
+        if (e.target.classList.contains("gridClass")) {
+            currentColorIndex = (currentColorIndex + 1) % colors.length;
+            e.target.style.backgroundColor = colors[currentColorIndex];
+        }
+    });
+}
